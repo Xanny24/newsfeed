@@ -3,11 +3,12 @@ const HtmmlWebpackPlugin = require("html-webpack-plugin");
 const { template } = require("@babel/core");
 
 module.exports = {
-	mode: process.end.NODE_ENV || 'production',
+	mode: process.env.NODE_ENV || "production",
 	entry: "./src/script.js",
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "bundle.[contenthash].js",
+		publicPath: "./",
 	},
 	module: {
 		rules: [
