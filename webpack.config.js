@@ -1,6 +1,5 @@
 const path = require("path");
-const HtmmlWebpackPlugin = require("html-webpack-plugin");
-const { template } = require("@babel/core");
+const HtmlWebpackPlugin = require("html-webpack-plugin"); // Исправлено: правильное имя плагина
 
 module.exports = {
 	mode: process.env.NODE_ENV || "production",
@@ -8,7 +7,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "bundle.[contenthash].js",
-		publicPath: "./",
+		publicPath: "./", // Исправлено: базовый путь для сервера
 	},
 	module: {
 		rules: [
@@ -28,11 +27,15 @@ module.exports = {
 		],
 	},
 	plugins: [
-		new HtmmlWebpackPlugin({
-			template: "./src/index.html",
+		new HtmlWebpackPlugin({
+			template: "./src/index.html", // Убедитесь, что путь правильный
 		}),
 	],
 	devServer: {
 		open: true,
+		static: {
+			directory: path.join(__dirname, "dist"), // Указывает, откуда сервер должен отдавать файлы
+		},
+		historyApiFallback: true, // Поддержка маршрутизации
 	},
 };
