@@ -1,13 +1,13 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin"); // Исправлено: правильное имя плагина
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
 	mode: process.env.NODE_ENV || "production",
-	entry: "./src/script.js",
+	entry: "./src/script.tsx",
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "bundle.[contenthash].js",
-		publicPath: "./", // Исправлено: базовый путь для сервера
+		publicPath: "/", // Убедитесь, что это правильно для вашего приложения
 	},
 	module: {
 		rules: [
@@ -24,7 +24,15 @@ module.exports = {
 				test: /\.svg$/,
 				type: "asset/resource",
 			},
+			{
+				test: /\.(ts|tsx)$/,
+				use: "ts-loader",
+				exclude: /node_modules/,
+			},
 		],
+	},
+	resolve: {
+		extensions: [".tsx", ".ts", ".js"],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

@@ -1,29 +1,34 @@
 import React from "react";
-import { categoryIds } from "../../utils.js";
-import { Navigation } from "../Navigation/Navigation.js";
-import { Articles } from "../Articles/Articles.js";
+import { categoryIds } from "../../utils";
+import { Navigation } from "../Navigation/Navigation";
+import { Articles } from "../Articles/Articles";
 import "./App.css";
+import { NewsAPI } from "../../types";
 
 export const App = () => {
-	const [category, setCategory] = React.useState("index");
-	const [articles, setArticles] = React.useState({
+	const [category, setCategory] = React.useState<string>("index");
+	const [articles, setArticles] = React.useState<NewsAPI>({
 		items: [],
 		categories: [],
 		sources: [],
 	});
 
-	const onNavClick = (e) => {
+	const onNavClick = (e: React.MouseEvent<HTMLElement>) => {
 		e.preventDefault();
-		setCategory(e.currentTarget.dataset.href);
+		const category = e.currentTarget.dataset.href;
+		if (category) {
+			setCategory(category);
+		}
 	};
 
 	React.useEffect(() => {
 		fetch(
 			"https://frontend.karpovcourses.net/api/v2/ru/news/" +
-				categoryIds[category] || ""
+				// @ts-ignore
+				(categoryIds[category] || "")
 		)
 			.then((response) => response.json())
-			.then((response) => {
+			.then((response: NewsAPI) => {
 				setArticles(response);
 			});
 	}, [category]);
@@ -42,6 +47,7 @@ export const App = () => {
 			</header>
 
 			<main>
+				{/* @ts-ignore */}
 				<Articles articles={articles} />
 			</main>
 
