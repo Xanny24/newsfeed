@@ -7,7 +7,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "bundle.[contenthash].js",
-		publicPath: "/", // Убедитесь, что это правильно для вашего приложения
+		publicPath: "./",
 	},
 	module: {
 		rules: [
@@ -36,14 +36,14 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: "./src/index.html", // Убедитесь, что путь правильный
+			template: "./src/index.html", 
 		}),
 	],
 	devServer: {
 		open: true,
 		static: {
-			directory: path.join(__dirname, "dist"), // Указывает, откуда сервер должен отдавать файлы
+			directory: path.join(__dirname, "dist"), 
 		},
-		historyApiFallback: true, // Поддержка маршрутизации
+		historyApiFallback: true, 
 	},
 };
